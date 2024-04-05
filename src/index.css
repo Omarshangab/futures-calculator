@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+   @apply bg-gradient-to-r from-slate-900 to-slate-800;
+   @apply text-gray-100;
+}
