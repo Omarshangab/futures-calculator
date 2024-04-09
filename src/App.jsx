@@ -49,9 +49,12 @@ function App() {
 
   function contractFormula() {
    let contractAmount = riskAmount / stopLoss / selectedPair;
-   //round the amount to the nearest whole number
-   contractAmount = Math.round(contractAmount)
-   console.log(selectedPair)
+   //only display if contract is over 1
+   if (contractAmount > 1) {
+    contractAmount = Math.round(contractAmount) }
+    else { contractAmount = 0
+    alert ('not enough risk to trade this contract. Please increase your risk amount or decrease stop loss.')
+    }
    //set the value of the contractAmount state variable
    setContractAmount(contractAmount)
    
