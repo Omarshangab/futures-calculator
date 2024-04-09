@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './assets/components/Header'
 import InputComps from './assets/components/InputComps'
 import AnswerComp from './assets/components/AnswerComp'
@@ -12,6 +12,7 @@ function App() {
   const [contractAmount, setContractAmount] = useState(0)
   const [contractValue, setContractValue] = useState('')
   const [selectedPair, setSelectedPair] = useState('')
+  const [contractRiskDollar, setContractRiskDollar] = useState(0)
 
   const pairs = [{
     name: 'SPX500 (ES)',
@@ -46,19 +47,6 @@ function App() {
           value: 10
   }]
 
-  function mini(){
-    let contractOption = 'Mini Contracts'
-    setContractValue(contractOption);
-  }
-  function micro(){
-    let contractOption = 'Micro Contracts'
-    console.log(contractOption)
-    setContractValue(contractOption);
-  }
-  // function saveUserInput(){
-
-  //   console.log(riskAmount, stopLoss, perPoint)
-  // }
   function contractFormula() {
    let contractAmount = riskAmount / stopLoss / selectedPair;
    //round the amount to the nearest whole number
@@ -67,6 +55,15 @@ function App() {
    //set the value of the contractAmount state variable
    setContractAmount(contractAmount)
    
+  }
+
+useEffect(()=>{
+  contractRiskAmount()
+},[contractAmount])
+
+  function contractRiskAmount (){
+    let contractRisk= (contractAmount * selectedPair) * stopLoss;
+   setContractRiskDollar(contractRisk)
   }
 
   return (
@@ -81,8 +78,9 @@ function App() {
     setPerPoint={setPerPoint}
     />
     <SelectPairsComp pairs={pairs} setSelectedPair={setSelectedPair}/>
-    <AnswerComp  contractFormula={contractFormula}/>
+    <AnswerComp  contractFormula={contractFormula} contractRiskAmount={contractRiskAmount}/>
     <div className='flex justify-center'>
+      <p className='mt-16 md:text-xl border rounded-md p-4 border-slate-700 shadow-md'>Risk = {contractRiskDollar}</p>
       <p className='mt-16 md:text-xl border rounded-md p-4 border-slate-700 shadow-md'>{contractAmount} Contracts</p>
     </div>
     </>

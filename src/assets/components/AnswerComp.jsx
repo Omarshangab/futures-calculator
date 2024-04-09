@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function AnswerComp(props) {
-  const { contractFormula } = props
+  const { contractFormula,contractRiskAmount } = props
 
   return (
     <div>
